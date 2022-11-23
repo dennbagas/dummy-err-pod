@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-pod
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: test-pod
+  template:
+    metadata:
+      labels:
+        app: test-pod
+    spec:
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        runAsNonRoot: true
+      containers:
+      - name: test-container
+        image: alpine:3.2
+        imagePullPolicy: IfNotPresent
+        command:
+          - /bin/sh
+          - "-c"
+          - "sleep 60m"
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 65532
+        terminationMessagePolicy: FallbackToLogsOnError
