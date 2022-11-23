@@ -25,9 +25,7 @@ spec:
         image: alpine:3.2
         imagePullPolicy: IfNotPresent
         command:
-          - /bin/sh
-          - "-c"
-          - "sleep 60m"
+          - "non-existent-command"
         securityContext:
           allowPrivilegeEscalation: false
           runAsUser: 65532
